@@ -3,16 +3,17 @@ pragma solidity ^0.8.0;
 
 // contracts/TokenICO.sol
 interface ERC20{
-    function transfer(address recipient, uint256 amount) external returns(bool);
-    function balanceOf(address account) external view returns(uint256);
-    function allowance(address owner, address spender) external view returns(uint256);
-    function approve(address spender, uint256 amount) external returns(bool);
+    function transfer(address recipient, uint256 amount) external returns(bool); // returns true if transfer succeeded
+    function balanceOf(address account) external view returns(uint256); // returns the balance of an account
+    function allowance(address owner, address spender) external view returns(uint256); // returns the remaining number of tokens that an owner has allowed to a spender
+    function approve(address spender, uint256 amount) external returns(bool); // approves or disapproves an operator for an account
     function transferFrom(address sender, address recipient, uint256 amount) external returns(bool);
     function symbol() external view returns(string memory);
     function totalSupply() external view returns(uint256);
     function name() external view returns(string memory);
 }
 
+// 
 contract TokenICO{
     address public owner;
     address public tokenAddress;
@@ -87,7 +88,7 @@ contract TokenICO{
         uint256 balance = token.balanceOf(address(this));
 
         require(balance > 0, "No token to withdraw");
-        
+
         require(token.transfer(owner, balance), "Transfer failed!");
     }
 
