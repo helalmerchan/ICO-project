@@ -4,12 +4,12 @@ import Web3Modal from "web3modal";
 import tokenICO from "./TokenICO.json";
 import erc20 from "./ERC20.json";
 
-export const TOKEN_ADDRESS = "";
-export const ERC20_ABI = "";
+export const TOKEN_ADDRESS = "0xcc0b84086e8eabe6634a05f5f43fab9333f2a01e";
+export const ERC20_ABI = erc20.abi;
 
-export const OWNER_ADDRESS = "";
+export const OWNER_ADDRESS = "0x79b89b6cB4dcf24352F20D7C99E499eBDc24cC51";
 
-export const CONTRACT_ADDRESS = "";
+export const CONTRACT_ADDRESS = "0x74930ccE3F219683b342490cBf17f31AFc112EC0";
 export const CONTRACT_ABI = tokenICO.abi;
 
 const networks = {
@@ -246,7 +246,39 @@ export const CHECK_ACCOUNT_BALANCE = async (ADDRESS) => {
   }
 }
 
+export const addTokenToMetamask = async () => {
+  if(window.ethereum){
+    const tokenDetails = await ERC20(TOKEN_ADDRESS);
 
-
-const tokenImage =
+    const tokenDecimals = tokenDetails?.decimals;
+    const tokenAddress = TOKEN_ADDRESS;
+    const tokenSymbol = tokenDetails?.symbol;
+    const tokenImage =
       "https://www.daulathussain.com/wp-content/uploads/2024/05/theblockchaincoders.jpg";
+
+    try {
+      const wasAdded = await window.ethereum.request({
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: tokenAddress,
+            symbol: tokenSymbol,
+            decimals: tokenDecimals,
+            image: tokenImage,
+          },
+        },
+      });
+      if(wasAdded) {
+        return "Token Added";
+      }else{
+        return "Token not Added";
+      }
+    } catch (error) {
+      return error.message
+    }
+  } else{
+    return "Install Metamask"
+  }
+}
+
