@@ -12,7 +12,7 @@ import {
     ERC20_CONTRACT, 
     TOKEN_ADDRESS,
     addTokenToMetamask
-} from "../constants";
+} from "./constants";
 
 export const TOKEN_ICO_Context = React.createContext();
 
@@ -22,7 +22,7 @@ export const TOKEN_ICO_Provider = ({ children }) => {
     const network = "Holesky";
 
     const [loader, setLoader] = useState(false);
-    const [account, setAccount] = useState(second);
+    const [account, setAccount] = useState();
     const [count, setCount] = useState(0);
 
     const notifySuccess = (msg) => toast.success(msg, {duration: 2000});
@@ -257,6 +257,7 @@ export const TOKEN_ICO_Provider = ({ children }) => {
         TRANSFER_TOKEN,
         CONNECT_WALLET,
         ERC20,
+        CHECK_ACCOUNT_BALANCE,
         setAccount,
         setLoader,
         addTokenToMetamask,

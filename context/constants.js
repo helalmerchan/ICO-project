@@ -170,7 +170,7 @@ export const TOKEN_ICO_CONTRACT = async () => {
   }
 }
 
-export const ERC20 = async () => {
+export const ERC20 = async (ADDRESS) => {
   try {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
@@ -178,6 +178,8 @@ export const ERC20 = async () => {
 
     const network = await provider.getNetwork(); 
     const signer = provider.getSigner();
+
+    const contract = fetchContract(ADDRESS, ERC20_ABI, signer);
     
     const userAddress = signer.getAddress();
     const balance = await contract.balanceOf(userAddress);
